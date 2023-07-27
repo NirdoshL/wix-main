@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<GlobalHeader />}>
-      <Route path="home" element={<HomePage />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="restaurants" element={<RestaurantPage />} />
       <Route path="menus" element={<Menu />} />
       <Route path="menus/:name/:id" element={<MenuList />} />

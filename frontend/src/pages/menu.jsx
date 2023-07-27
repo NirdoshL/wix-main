@@ -31,7 +31,7 @@ export function Menu() {
           in One Place!"
         </h1>
         <div className="flex flex-row flex-wrap justify-center">
-          {data.success ? (
+          {data && data.success ? (
             data.data.map((item, index) => (
               <div
                 key={index}

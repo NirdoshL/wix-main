@@ -37,7 +37,7 @@ export function MenuList() {
         <h1 className="text-green-800 font-bold text-2xl pb-4 pt-5 mx-2">
           Total Items:{" "}
           <span className="text-green-500 text-md pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-            {data.data ? data.data.length : 0}
+            {data && data.data ? data.data.length : 0}
           </span>
         </h1>
       </div>
@@ -83,7 +83,7 @@ export function MenuList() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.success ? (
+          {data && data.success ? (
             data.data.map((item, index) => (
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

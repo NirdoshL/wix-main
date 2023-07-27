@@ -6,7 +6,7 @@ import { GlobalFooter } from "../pages/Global";
 
 export function NavBar() {
   let Links = [
-    { name: "HOME", link: "/home" },
+    { name: "HOME", link: "/" },
     { name: "RESTAURANTS", link: "/restaurants" },
     { name: "MENUS", link: "/menus" },
     { name: "ABOUT", link: "/about" },
