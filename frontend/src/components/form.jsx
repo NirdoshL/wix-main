@@ -99,7 +99,7 @@ export function RestaurantForm() {
               Add Restaurant
             </button>
           </div>
-          <div className="relative">
+          <div>
             <img
               src={Image}
               alt="img"
