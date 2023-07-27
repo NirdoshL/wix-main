@@ -26,6 +26,9 @@ export function RestaurantForm() {
       <div className=" flex items-center justify-center min-h-screen bg-white">
         <div className="flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex flex-col justify-center p-8 md:p-14">
+            <p>Testing ApiID: 1181234022895776</p>
+            <p>Testing Name: EverestMaya</p>
+            <p>Testing locationID: 70c512d8-eb4e-4524-8f1b-e86239409658</p>
             <span className="mb-3 text-4xl text-green-600 font-bold">
               Add Your Restaurant
             </span>
