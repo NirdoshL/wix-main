@@ -1,26 +1,37 @@
-import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import Image from "../assets/3d1.png";
-import { FetchMenuData } from "../function/fetchMenu";
-import Spinner from "../components/spinner";
+import Image from "../../assets/3d1.png";
+import { useEffect, useState } from "react";
+import Spinner from "../../components/spinner";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { fetchData, toggleVisibility } from "../../function/fetchMenu";
+
 export function Menu() {
   const [data, setData] = useState([]);
   const [ShowLoader, setShowLoader] = useState(true);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowLoader(false);
-    }, 5000); // 6 seconds in milliseconds
-    FetchMenuData();
-    const interval = setInterval(() => {
-      FetchMenuData();
-      setData(JSON.parse(localStorage.getItem("menus")));
-    }, 5000);
-    setData(JSON.parse(localStorage.getItem("menus")));
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
+    async function fetchDataAsync() {
+      try {
+        const responseData = await fetchData();
+        setData(responseData);
+        console.log(responseData);
+        setShowLoader(false);
+      } catch (error) {
+        setShowLoader(false);
+        toast(`Error fetching data: ${error}`);
+      }
+    }
+
+    fetchDataAsync();
   }, []);
+
+  const toggleMessage = (value) => {
+    const toggle = toggleVisibility(value);
+    if (toggle) {
+      toast("Visibility Toggled, Need refresh to see change.");
+    }
+  };
+
   return ShowLoader ? (
     <Spinner />
   ) : (
@@ -42,6 +53,22 @@ export function Menu() {
                   alt={item.name}
                   className="h-20 m-6 object-contain"
                 />
+                <button
+                  onClick={() => toggleMessage(item.apiID)}
+                  className="flex cursor-pointer text-red-800 justify-center items-center"
+                >
+                  {item.show ? (
+                    <>
+                      <span>Show</span>
+                      <AiFillEye />
+                    </>
+                  ) : (
+                    <>
+                      <span>Hide</span>
+                      <AiFillEyeInvisible />
+                    </>
+                  )}
+                </button>
                 <h2 className="px-2 pb-3">
                   Name:{" "}
                   <span className="text-green-500 px-2 pb-3">{item.name}</span>

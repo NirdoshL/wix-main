@@ -1,6 +1,7 @@
 exports.getUserInfo = (userAgent, ip) => {
+  console.log(userAgent);
   const browserInfo = userAgent.match(
-    /(chrome|firefox|safari|brave|PostmanRuntime|Edg|opera|msie|trident(?=\/))\/?\s*(\d+)/i
+    /(chrome|firefox|safari|brave|PostmanRuntime|Edge|msie|trident(?=\/))\/?\s*(\d+)/i
   );
   const browser = browserInfo ? browserInfo[1] : "Unknown";
   const browserVersion = browserInfo ? browserInfo[2] : "Unknown";

@@ -1,3 +1,4 @@
+//used by ErrorHandler class inside utils
 const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode ? err.statusCode : 500;
   const message = err.message ? err.message : "Internal server error!";

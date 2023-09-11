@@ -3,7 +3,7 @@ import React from "react";
 export default function Spinner() {
   return (
     <>
-      <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex h-screen w-screen items-center justify-center ">
         <button
           type="button"
           className="flex items-center rounded-lg bg-green-700 px-4 py-2 text-white"

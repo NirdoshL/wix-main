@@ -1,4 +1,5 @@
-export { HomePage } from "./homePage";
-export { RestaurantPage } from "./restaurant";
-export { Menu } from "./menu";
-export { MenuList } from "./menuList";
+export { RestaurantPage } from "./SuperAdmin/restaurant";
+export { Menu } from "./SuperAdmin/menu";
+export { MenuList } from "./SuperAdmin/menuList";
+export { Dashboard } from "./SuperAdmin/dashboard";
+export { AdminOrderList } from "./Admin/orderList";

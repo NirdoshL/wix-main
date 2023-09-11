@@ -1,10 +1,15 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { config } from "../config/credentials";
 
 export const RegisterMenuData = async (data) => {
   try {
     await axios
-      .post("http://localhost:5000/api/v1/menu/register", data)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/menu/register`,
+        data,
+        config
+      )
       .then((response) => {
         if (response) {
           toast(`${response.data.message}`);

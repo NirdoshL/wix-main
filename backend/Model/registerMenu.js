@@ -5,6 +5,10 @@ const RegisterMenuSchema = new Schema({
     type: String,
     required: true,
   },
+  show: {
+    type: Boolean,
+    default: true,
+  },
   locationID: {
     type: String,
     required: true,
@@ -14,4 +18,7 @@ const RegisterMenuSchema = new Schema({
     required: true,
   },
 });
-module.exports = User = mongoose.model("RegisteredMenu", RegisterMenuSchema);
+module.exports = RegisteredMenu = mongoose.model(
+  "RegisteredMenu",
+  RegisterMenuSchema
+);

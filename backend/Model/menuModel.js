@@ -19,5 +19,8 @@ const MenuSchema = new Schema({
   price: {
     type: Number,
   },
+  variations: {
+    type: Array,
+  },
 });
 module.exports = User = mongoose.model("menu", MenuSchema);

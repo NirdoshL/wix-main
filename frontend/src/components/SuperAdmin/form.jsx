@@ -1,8 +1,8 @@
 import React from "react";
-import Image from "../assets/3d1.png";
 import { useFormik } from "formik";
-import { restaurantValidation } from "../validation/validate";
-import { RegisterMenuData } from "../function/registerMenu";
+import Image from "../../assets/3d1.png";
+import { RegisterMenuData } from "../../function/registerMenu";
+import { restaurantValidation } from "../../validation/validate";
 
 const initialValues = {
   name: "",
