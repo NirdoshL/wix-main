@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { fetchDataItem, fetchSectionAndMenu } from "../../function/fetchMenu";
+import Product from "./product";
+import Spinner from "../spinner";
+import TopCatagory from "./catagory";
+import Img from "../../assets/29.png";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
-import Product from "./product";
-import Img from "../../assets/29.png";
-import Spinner from "../spinner";
-import TopCatagory from "./catagory";
+import React, { useState, useEffect } from "react";
+import { fetchDataItem, fetchSectionAndMenu } from "../../function/fetchMenu";
 
 export default function ShowProducts() {
   const { id, name } = useParams();
@@ -25,7 +25,6 @@ export default function ShowProducts() {
         const responseData = await fetchDataItem(id);
         const responseMenu = await fetchSectionAndMenu(id);
         const allData = responseData.data.map((item) => item.menuId);
-        // console.log(allData);
         setDatas(responseData);
         setData(responseMenu);
         setallDatas(allData);
@@ -78,7 +77,7 @@ export default function ShowProducts() {
         </div>
       </div>
 
-      <TopCatagory data={data} indexCata={indexCata} />
+      <TopCatagory datas={datas} data={data} indexCata={indexCata} />
       <hr className="border-green-800 border-2" />
       <h1 className="py-6 text-3xl underline text-red-600 md:text-4xl text-center justify-center font-bold">
         Our Menu

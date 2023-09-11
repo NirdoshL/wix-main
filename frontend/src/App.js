@@ -11,6 +11,7 @@ import {
   AdminHeader,
 } from "./pages/Global";
 import Cart from "./pages/User/cart";
+import ScrollToTop from "./config/scrollToTop";
 import { ToastContainer } from "react-toastify";
 import { allowedRoles } from "./config/allowedRoles";
 import CheckSuccess from "./pages/Global/checkSuccess";
@@ -25,10 +26,11 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
   const Role = IsAuthenticated();
-  console.log(Role);
+
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop/>
         <Routes>
           {/* Unauthorised User */}
           <Route

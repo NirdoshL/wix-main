@@ -12,10 +12,6 @@ export function UserNav() {
       link: "/",
     },
     {
-      title: "Shop",
-      link: "/",
-    },
-    {
       title: "About",
       link: "/",
     },
@@ -26,7 +22,6 @@ export function UserNav() {
   ];
   const [showMenu, setShowMenu] = useState(true);
   const [sidenav, setSidenav] = useState(false);
-  // const [category, setCategory] = useState(false);
   const location = useLocation();
   useEffect(() => {
     let ResponsiveMenu = () => {
@@ -71,7 +66,7 @@ export function UserNav() {
               className="inline-block md:hidden cursor-pointer w-8 h-6 absolute top-6 right-4"
             />
             {sidenav && (
-              <div className="fixed top-0 left-0 w-full h-screen bg-black text-gray-200 bg-opacity-80 z-50">
+              <div className="fixed top-0 left-0 w-full h-screen bg-black text-gray-200 bg-opacity-95 z-50">
                 <div className="w-[80%] h-full relative">
                   <div className="w-full h-full bg-primeColor p-6">
                     <img
@@ -95,21 +90,6 @@ export function UserNav() {
                         </li>
                       ))}
                     </ul>
-                    {/* <div className="mt-4">
-                      <h1
-                        onClick={() => setCategory(!category)}
-                        className="flex justify-between text-base cursor-pointer items-center font-titleFont mb-2"
-                      >
-                        Shop by Restaurant{" "}
-                        <span className="text-lg">{category ? "-" : "+"}</span>
-                      </h1>
-                      {category && (
-                        <ul className="text-sm flex flex-col gap-1">
-                          <li className="headerSedenavLi">Everest maya</li>
-                          <li className="headerSedenavLi">Terarain</li>
-                        </ul>
-                      )}
-                    </div> */}
                   </div>
                   <span
                     onClick={() => setSidenav(false)}

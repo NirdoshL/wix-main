@@ -1,40 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaFacebook, FaYoutube, FaLinkedin, FaGithub } from "react-icons/fa";
-import paymentCard from "../../assets/payment.png";
+// import paymentCard from "../../assets/payment.png";
 
 export function UserFooter() {
-  const [emailInfo, setEmailInfo] = useState("");
-  const [subscription, setSubscription] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
+  // const [emailInfo, setEmailInfo] = useState("");
+  // const [subscription, setSubscription] = useState(false);
+  // const [errMsg, setErrMsg] = useState("");
 
-  const emailValidation = () => {
-    return String(emailInfo)
-      .toLocaleLowerCase()
-      .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
-  };
+  // const emailValidation = () => {
+  //   return String(emailInfo)
+  //     .toLocaleLowerCase()
+  //     .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
+  // };
 
-  const handleSubscription = () => {
-    if (emailInfo === "") {
-      setErrMsg("Please provide an Email !");
-    } else if (!emailValidation(emailInfo)) {
-      setErrMsg("Please give a valid Email!");
-    } else {
-      setSubscription(true);
-      setErrMsg("");
-      setEmailInfo("");
-    }
-  };
+  // const handleSubscription = () => {
+  //   if (emailInfo === "") {
+  //     setErrMsg("Please provide an Email !");
+  //   } else if (!emailValidation(emailInfo)) {
+  //     setErrMsg("Please give a valid Email!");
+  //   } else {
+  //     setSubscription(true);
+  //     setErrMsg("");
+  //     setEmailInfo("");
+  //   }
+  // };
   return (
     <div className="w-full bg-[#F5F5F3] py-20">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
+      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-4 px-4 gap-10">
         <div className="col-span-2">
           <h3 className="text-xl font-bodyFont font-semibold mb-6">
-            More about dvls Shop
+            More about myDvls Shop
           </h3>
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sint
-              ab ullam, numquam nesciunt in.
+              We are one of the leading agencies in the technical space for the
+              hospitality industry with our specialty being the service, retail
+              and hotel industries. Pretty soon to come will be events , luxury
+              and fintech as well.
             </p>
             <ul className="flex items-center gap-2">
               <a
@@ -96,18 +98,10 @@ export function UserFooter() {
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
               Orders
             </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Addresses
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Account Details
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Payment Options
-            </li>
           </ul>
         </div>
-        <div className="col-span-2 flex flex-col items-center w-full px-4">
+
+        {/* <div className="col-span-2 flex flex-col items-center w-full px-4">
           <h3 className="text-xl font-bodyFont font-semibold mb-6">
             Subscribe to our newsletter.
           </h3>
@@ -152,7 +146,7 @@ export function UserFooter() {
               src={paymentCard}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

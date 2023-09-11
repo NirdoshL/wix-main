@@ -34,6 +34,7 @@ export default function CheckSuccess() {
         </p>
         <Link
           to="/cart"
+          preventScrollReset={true}
           className="mt-6 block bg-green-600 text-center rounded-full text-white"
         >
           Continue Shopping

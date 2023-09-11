@@ -20,7 +20,7 @@ export function FloatingButtons() {
           <p className="text-xs font-semibold font-titleFont">Profile</p>
         </div>
       </Link>
-      <Link to="/cart">
+      <Link to="/cart" preventScrollReset={true}>
         <div className="bg-gray-200 w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative">
           <div className="flex justify-center items-center">
             <RiShoppingCart2Fill className="text-2xl -translate-x-12 group-hover:translate-x-3 transition-transform duration-200" />

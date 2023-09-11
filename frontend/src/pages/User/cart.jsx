@@ -75,15 +75,15 @@ const Cart = () => {
                 <p className="flex items-center justify-between border-[1px] border-gray-400 py-1.5 text-lg px-4 font-medium">
                   Total
                   <span className="font-bold tracking-wide text-lg font-titleFont">
-                    ${totalAmt + shippingCharge}
+                    ${Math.round(totalAmt + shippingCharge)}
                   </span>
                 </p>
               </div>
               <div className="flex justify-end">
                 {/* Stripe payment Button  */}
                 <PayButton
-                  totalAmount={totalAmt + shippingCharge}
-                  shipCharge={shippingCharge}
+                  totalAmount={Math.round(totalAmt + shippingCharge)}
+                  shipCharge={Math.round(shippingCharge)}
                   cartItems={products}
                 />
               </div>

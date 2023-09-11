@@ -1,17 +1,25 @@
 import Product from "./product";
 import Img from "../../assets/29.png";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-//catagory
-const TopCatagory = ({ data, indexCata }) => {
-  //Active link is not set by default
+const TopCatagory = ({ datas, data, indexCata }) => {
+  const { id } = useParams();
+  const [allDatas, setAllDatas] = useState([]);
   const [activeTab, setActiveTab] = useState(-1);
-  //stores all matching ids of an items.
   const [matchingMenu, setMatchingMenu] = useState([]);
-  //toggle active link according to user click
+
+  // Reset activeTab & matchingMenu and set allDatas when indexCata changes
+  //
+  useEffect(() => {
+    setActiveTab(-1);
+    setMatchingMenu([]);
+    const allData = datas.data.map((item) => item.menuId);
+    setAllDatas(allData);
+  }, [indexCata, datas.data]);
+
   const handleTabClick = (index) => {
     setActiveTab(index);
-    //filtering only matching item from menu by id
     const selectedChild = data.section[indexCata].children[index];
     const matchingMenuIds = selectedChild.itemIds;
     const matchingMenuItems = data.menu.filter((item) =>
@@ -22,10 +30,7 @@ const TopCatagory = ({ data, indexCata }) => {
 
   return (
     <div className="flex flex-col md:flex-col">
-      <div className=" md:mr-4 flex flex-wrap">
-        {
-          //mapping to show title of id as button when clicked gives matching item as Product
-        }
+      <div className="md:mr-4 flex flex-wrap">
         {data.section[indexCata].children.map((child, index) => (
           <button
             key={child.id}
@@ -38,20 +43,52 @@ const TopCatagory = ({ data, indexCata }) => {
           </button>
         ))}
       </div>
-      {
-        //product details
-      }
       <div className="w-full grid grid-cols-1 m-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
-        {matchingMenu.map((item) => (
-          <Product
-            key={item.menuId}
-            _id={item.menuId}
-            img={Img}
-            foodName={JSON.parse(item.title).en_US}
-            price={item.price ? parseInt(item.price) / 100 : 0}
-            badge={true}
-            des={item.desc}
-          />
+        {matchingMenu.map((item, itemIndex) => (
+          <>
+            {item.variations
+              ? item.variations.map((variation, variationIndex) => {
+                  const matchingItemIds = variation.itemIds.filter((id) =>
+                    allDatas.includes(id)
+                  );
+                  if (matchingItemIds.length > 0) {
+                    const titlesList = matchingItemIds.map((matchingItemId) => {
+                      const matchingItem = datas.data.find(
+                        (item) => item.menuId === matchingItemId
+                      );
+                      return matchingItem;
+                    });
+
+                    return (
+                      <Product
+                        key={`${itemIndex}-${variationIndex}`}
+                        _id={item.title}
+                        resID={id}
+                        img={Img}
+                        foodName={JSON.parse(item.title).en_US}
+                        variations={titlesList}
+                        variationPrice={variation.prices}
+                        price={item.price ? parseInt(item.price) / 100 : ""}
+                        badge={true}
+                        des={item.desc}
+                      />
+                    );
+                  }
+                  return null;
+                })
+              : item.price && (
+                  <Product
+                    key={item.menuId}
+                    _id={item.title}
+                    img={Img}
+                    resID={id}
+                    foodName={JSON.parse(item.title).en_US}
+                    price={item.price ? parseInt(item.price) / 100 : ""}
+                    badge={true}
+                    des={item.desc}
+                  />
+                )}
+          </>
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { fetchData } from "../../function/fetchMenu";
 import { toast } from "react-toastify";
 import ViewRestaurant from "./viewRestaurant";
 
-const SpecialOffers = () => {
+const ShopNow = () => {
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
   useEffect(() => {
@@ -43,4 +43,4 @@ const SpecialOffers = () => {
   );
 };
 
-export default SpecialOffers;
+export default ShopNow;
