@@ -12,6 +12,7 @@ import {
 } from "./pages/Global";
 import Cart from "./pages/User/cart";
 import { ToastContainer } from "react-toastify";
+import { allowedRoles } from "./config/allowedRoles";
 import CheckSuccess from "./pages/Global/checkSuccess";
 import { OrderList } from "./pages/SuperAdmin/orderList";
 import ShowProducts from "./components/User/showProducts";
@@ -35,11 +36,11 @@ function App() {
             element={
               Role === null ? (
                 <LoginForm />
-              ) : Role === "user" ? (
+              ) : Role === allowedRoles[0] ? (
                 <Navigate to={"/home"} />
-              ) : Role === "admin" ? (
+              ) : Role === allowedRoles[1] ? (
                 <Navigate to={"/admin/order"} />
-              ) : Role === "superadmin" ? (
+              ) : Role === allowedRoles[2] ? (
                 <Navigate to={"/dashboard"} />
               ) : (
                 <LoginForm />
