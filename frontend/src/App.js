@@ -21,6 +21,7 @@ import ProtectedAdminRoute from "./function/protectedAdmin";
 import { IsAuthenticated } from "./function/isAuthenticated";
 import { Menu, MenuList, RestaurantPage } from "./pages/index";
 import { EmployeeList } from "./pages/SuperAdmin/employeeList";
+import WixShowProducts from "./components/User/wixUserProduct";
 import ProtectedSuperRoute from "./function/ProtectedSuperAdmin";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
@@ -30,7 +31,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <ScrollToTop/>
+        <ScrollToTop />
         <Routes>
           {/* Unauthorised User */}
           <Route
@@ -51,6 +52,13 @@ function App() {
             exact
           />
           <Route path="/register" element={<RegisterForm />} exact />
+          {/*wix user */}
+          <Route path="/" element={<UserHeader />}>
+            <Route
+              path="/restaurant/:name/:id/:uid/:email"
+              element={<WixShowProducts />}
+            />
+          </Route>
           <Route path="/404" element={<GlobalError />} exact />
           <Route path="*" element={<GlobalError />} />
 

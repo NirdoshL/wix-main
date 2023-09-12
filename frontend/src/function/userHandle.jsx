@@ -43,6 +43,32 @@ export const LoginUser = async (data) => {
   }
 };
 
+export const LoginWixUser = async (data) => {
+  try {
+    await axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/users/login/wix/memberonly`,
+        data,
+        config
+      )
+      .then((response) => {
+        if (response && response.data) {
+          const data = response.data;
+          Store("user", data);
+          return;
+        } else {
+          window.location.replace("/");
+        }
+      })
+      .catch((error) => {
+        toast(`${error.response.data.message}`);
+        window.location.replace("/");
+      });
+  } catch (error) {
+    toast(`${error.response.data.message}`);
+  }
+};
+
 export const LogOutUser = async () => {
   try {
     await axios

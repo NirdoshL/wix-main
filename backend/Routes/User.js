@@ -8,6 +8,8 @@ const {
   verify,
   getUsers,
   makeAdmin,
+  signUpAndLogin,
+  wixlogIn,
 } = require("../Controller/UserController");
 const {
   userRegisterValidator,
@@ -37,5 +39,9 @@ router.patch(
   isAuthenticated,
   makeAdmin
 );
+
+//this is only for wix
+router.post("/register/wix/memberonly", userRegisterValidator, signUpAndLogin);
+router.post("/login/wix/memberonly", wixlogIn);
 
 module.exports = router;

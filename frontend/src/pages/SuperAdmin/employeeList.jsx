@@ -136,14 +136,14 @@ export function EmployeeList() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.userInfo.browser}
                   </td>
-                  {user.role === "user" && (
+                  {user.isverified && user.role === "user" && (
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-white bg-red-500 hover:bg-red-600 rounded-md focus:outline-none focus:ring focus:border-red-300">
                       <button onClick={() => togglePopup(user._id)}>
                         Make Admin
                       </button>
                     </td>
                   )}
-                  {user.role === "admin" && (
+                  {user.isverified && user.role === "admin" && (
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-white bg-green-500 hover:bg-green-600 rounded-md focus:outline-none focus:ring focus:border-green-300">
                       <button onClick={() => togglePopup(user._id)}>
                         Make User

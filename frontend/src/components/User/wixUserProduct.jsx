@@ -7,10 +7,10 @@ import { useParams } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
 import React, { useState, useEffect } from "react";
 import { fetchDataItem, fetchSectionAndMenu } from "../../function/fetchMenu";
-import { Store } from "../../config/store";
+import { LoginWixUser } from "../../function/userHandle";
 
-export default function ShowProducts() {
-  const { id, name } = useParams();
+export default function WixShowProducts() {
+  const { id, name, uid, email } = useParams();
 
   const [data, setData] = useState([]);
   const [datas, setDatas] = useState([]);
@@ -19,11 +19,13 @@ export default function ShowProducts() {
   const [showLoading, setShowLoading] = useState(true);
   const [visibleProducts, setVisibleProducts] = useState(8);
 
-  // All Menu along with Section fetching
+  //Login for wix-user and All Menu along with Section fetching
   useEffect(() => {
     async function fetchDataItemAsync() {
       setShowLoading(true);
       try {
+        const data = { id: uid, email: email };
+        await LoginWixUser(data);
         const responseData = await fetchDataItem(id);
         const responseMenu = await fetchSectionAndMenu(id);
         const allData = responseData.data.map((item) => item.menuId);
@@ -37,7 +39,7 @@ export default function ShowProducts() {
       }
     }
     fetchDataItemAsync();
-  }, [id]);
+  }, [id, uid, email]);
 
   // increase by 10 on show more
   const handleShowMore = () => {

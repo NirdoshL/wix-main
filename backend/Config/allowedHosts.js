@@ -1,1 +1,4 @@
-module.exports = allowedHost = ["http://localhost:3000"];
+module.exports = allowedHost = [
+  "http://localhost:3000",
+  "https://deltavlogic.editorx.io",
+];
