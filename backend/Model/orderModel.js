@@ -8,6 +8,7 @@ const OrderSchema = new Schema(
         productId: { type: String },
         quantity: { type: Number, default: 1 },
         name: { type: String },
+        price: { type: String },
         resID: { type: String },
         variation: { type: String },
         variationPrice: { type: Number },
@@ -18,6 +19,10 @@ const OrderSchema = new Schema(
     shipping: { type: Object, required: true },
     delivery_status: { type: String, default: "pending" },
     payment_status: { type: String, required: true },
+    bill_No: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

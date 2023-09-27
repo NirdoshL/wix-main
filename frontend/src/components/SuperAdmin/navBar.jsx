@@ -77,9 +77,11 @@ export function NavBar() {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer hover:text-[green] font-semibold">
-                    Settings
-                  </p>
+                  <Link to={"/super/settings"}>
+                    <p className="cursor-pointer hover:text-[green] font-semibold">
+                      Settings
+                    </p>
+                  </Link>
                   <button onClick={() => LogOutUser()}>
                     <p className="cursor-pointer hover:text-[green] font-semibold">
                       Log out
@@ -91,11 +93,6 @@ export function NavBar() {
           </ul>
         </div>
       </div>
-      {/* <div className="my-20 mx-5 flex-col">
-        <GlobalSidebar />
-        <Outlet />
-      </div>
-      <GlobalFooter /> */}
     </>
   );
 }

@@ -77,9 +77,11 @@ export function AdminNavBar() {
                       Profile
                     </p>
                   </Link>
-                  <p className="cursor-pointer hover:text-[green] font-semibold">
-                    Settings
-                  </p>
+                  <Link to={"/admin/settings"}>
+                    <p className="cursor-pointer hover:text-[green] font-semibold">
+                      Settings
+                    </p>
+                  </Link>
                   <button onClick={() => LogOutUser()}>
                     <p className="cursor-pointer hover:text-[green] font-semibold">
                       Log out

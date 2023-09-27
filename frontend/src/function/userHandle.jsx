@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Store } from "../config/store";
 import { config } from "../config/credentials";
+import axiosInstance from "../config/interceptor";
 
 export const RegisterUser = async (data) => {
   try {
@@ -9,16 +10,16 @@ export const RegisterUser = async (data) => {
       .post(`${process.env.REACT_APP_BACKEND_URL}/users/register`, data)
       .then((response) => {
         if (response) {
-          toast(`${response.data.message}`);
+          toast.success(`${response.data.message}`);
           return;
         }
       })
       .catch((error) => {
-        toast(`${error.response.data.message}`);
+        toast.error(`${error.response.data.message}`);
         return;
       });
   } catch (error) {
-    toast(`${error.response.data.message}`);
+    toast.error(`${error.response.data.message}`);
     return;
   }
 };
@@ -36,10 +37,10 @@ export const LoginUser = async (data) => {
         }
       })
       .catch((error) => {
-        toast(`${error.response.data.message}`);
+        toast.error(`${error.response.data.message}`);
       });
   } catch (error) {
-    toast(`${error.response.data.message}`);
+    toast.error(`${error.response.data.message}`);
   }
 };
 
@@ -61,11 +62,11 @@ export const LoginWixUser = async (data) => {
         }
       })
       .catch((error) => {
-        toast(`${error.response.data.message}`);
+        toast.error(`${error.response.data.message}`);
         window.location.replace("/");
       });
   } catch (error) {
-    toast(`${error.response.data.message}`);
+    toast.error(`${error.response.data.message}`);
   }
 };
 
@@ -76,22 +77,22 @@ export const LogOutUser = async () => {
       .then((response) => {
         if (response && response.data) {
           localStorage.clear();
+          toast.success(`${response.data.message}`);
           window.location.replace("/register");
-          toast(`${response.data.message}`);
         }
       })
       .catch((error) => {
-        toast(`${error.response.data.message}`);
+        toast.error(`${error.response.data.message}`);
       });
   } catch (error) {
-    toast(`${error.response.data.message}`);
+    toast.error(`${error.response.data.message}`);
   }
 };
 
 export const getAllUser = async () => {
   try {
-    await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/users/admin/getusers`, config)
+    await axiosInstance
+      .get("/users/admin/getusers", config)
       .then((response) => {
         if (response && response.data) {
           console.log(response.data);
@@ -99,9 +100,9 @@ export const getAllUser = async () => {
         }
       })
       .catch((error) => {
-        toast(`${error.response.data.message}`);
+        toast.error(`${error.response.data.message}`);
       });
   } catch (error) {
-    toast(`${error.response.data.message}`);
+    toast.error(`${error.response.data.message}`);
   }
 };

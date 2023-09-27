@@ -1,23 +1,10 @@
-import React, { useState } from "react";
-import { PiNotebookBold } from "react-icons/pi";
-import { FaPeopleGroup } from "react-icons/fa6";
-import { TbReportAnalytics } from "react-icons/tb";
-import { MdOutlineDashboard } from "react-icons/md";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { RiSettings4Line, RiRestaurant2Line } from "react-icons/ri";
-
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { SuperSidebarLink } from "../../../config/SideBarLinks";
 
 export function GlobalSidebar() {
-  const menus = [
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Restaurant", link: "/restaurants", icon: RiRestaurant2Line },
-    { name: "Menus", link: "/menus", icon: PiNotebookBold },
-    { name: "Orders", link: "/order", icon: TbReportAnalytics, margin: true },
-    { name: "Employees", link: "/employee", icon: FaPeopleGroup },
-    { name: "Settings", link: "/", icon: RiSettings4Line },
-  ];
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <section className=" flex gap-6">
       <div
@@ -35,7 +22,7 @@ export function GlobalSidebar() {
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 ">
-          {menus?.map((menu, i) => (
+          {SuperSidebarLink?.map((menu, i) => (
             <Link
               to={menu?.link}
               key={i}

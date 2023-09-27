@@ -41,7 +41,6 @@ const UserSchema = new Schema({
   },
   isLogged: {
     type: Boolean,
-    select: false,
     default: false,
   },
   createdAt: {
@@ -63,6 +62,11 @@ const UserSchema = new Schema({
     default: undefined,
   },
   resName: {
+    type: String,
+    select: true,
+    default: undefined,
+  },
+  resAddress: {
     type: String,
     select: true,
     default: undefined,

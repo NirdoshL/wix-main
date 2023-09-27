@@ -3,6 +3,7 @@ import { TiTick } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import Spinner from "../../components/spinner";
 import { fetchOrder } from "../../function/fetchOrder";
+import { orderSuperHeaders } from "../../config/tableHeader";
 
 export function OrderList() {
   const [data, setData] = useState([]);
@@ -12,11 +13,10 @@ export function OrderList() {
       try {
         const responseData = await fetchOrder();
         setData(responseData);
-        console.log("order", responseData);
         setShowLoader(false);
       } catch (error) {
         setShowLoader(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
 
@@ -39,102 +39,15 @@ export function OrderList() {
         <table className="min-w-full divide-y divide-gray-200 ">
           <thead className="bg-gray-50">
             <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                S.N
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                User ID
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                User Email
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product ID
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Quantity
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Variations
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Variation Price
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Price
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Charge
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Payment process
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Country
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Address 1
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Address 2
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Payment Success
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Card detail
-              </th>
+              {orderSuperHeaders.map((item, index) => (
+                <th
+                  key={index}
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  {item}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -151,28 +64,34 @@ export function OrderList() {
                     {item.shipping.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.products.map((x) => (
-                      <span>{x.name}</span>
+                    {item.products.map((x, index) => (
+                      <div>
+                        <span key={index}>{x.name}</span>
+                      </div>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.products.map((x) => (
-                      <span>{x._id}</span>
+                    {item.products.map((x, i) => (
+                      <div>
+                        <span key={i}>{x._id}</span>
+                      </div>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.products.map((x) => (
-                      <span>{x.quantity}</span>
+                    {item.products.map((x, i) => (
+                      <div>
+                        <span key={i}>{x.quantity}</span>
+                      </div>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.products.map((x) => (
-                      <span>{x.variation}</span>
+                    {item.products.map((x, i) => (
+                      <span key={i}>{x.variation}</span>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.products.map((x) => (
-                      <span>{x.variationPrice}</span>
+                    {item.products.map((x, i) => (
+                      <span key={i}>{x.variationPrice}</span>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

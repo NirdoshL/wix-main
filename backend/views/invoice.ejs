@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= res %></title>
+    <style>
+      * {
+        font-size: 12px;
+        font-family: "Times New Roman";
+      }
+
+      .ticket {
+        width: 250px;
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      th {
+        border-top: 1px dashed black;
+        border-bottom: 1px dashed black;
+        border-collapse: collapse;
+      }
+
+      td.description,
+      th.description {
+        width: 75px;
+        max-width: 75px;
+      }
+
+      td.quantity,
+      th.quantity {
+        width: 40px;
+        max-width: 40px;
+        word-break: break-all;
+      }
+
+      td.price,
+      th.price {
+        width: 40px;
+        max-width: 40px;
+        word-break: break-all;
+      }
+
+      .centered {
+        text-align: center;
+        align-content: center;
+      }
+
+      .horizontal-line {
+        border-top: 1px dashed #000;
+      }
+
+      .left-label {
+        text-align: left;
+        margin-left: 20px;
+      }
+
+      @media print {
+        .hidden-print,
+        .hidden-print * {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ticket">
+      <p class="centered"><%= res %> <br /><address class="centered"><%=address%></address></p>
+      <p class="left-label">Bill No:<%= data.bill_No %></p>
+      <p class="left-label">Date:<%= data.createdAt.split("T")[0]%></p>
+      <p class="left-label">Name:<%= data.shipping.name %></p>
+      <p class="left-label">
+        Address:<%= data.shipping.address.postal_code %>, <%=
+        data.shipping.address.line2 %>, <%= data.shipping.address.line1 %>, <%=
+        data.shipping.address.city %>, <%= data.shipping.address.state%>
+      </p>
+      <p class="left-label">Payment mode:</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="quantity">Qty.</th>
+            <th class="description">Items</th>
+            <th class="price">Rate$</th>
+            <th class="price">Amt$</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.products.forEach(function(item) { %>
+          <tr>
+            <td><%= item.quantity %></td>
+            <td><%= item.name %>(<%= item.variation?item.variation:null %>)</td>
+            <td>
+              $<%= item.variationPrice ? item.variationPrice : item.price ?
+              item.price : "???"%>
+            </td>
+            <td>
+              $<%= item.variationPrice ? item.quantity*item.variationPrice :
+              item.price ? item.price*item.quantity : "???"%>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+      <table>
+        <tbody>
+          <tr>
+            <td>Gross Amount</td>
+            <td>:</td>
+            <td>$<%=(data.subtotal)/100%></td>
+          </tr>
+          <tr>
+            <td>Discount</td>
+            <td>:</td>
+            <td>$0.00</td>
+          </tr>
+          <tr>
+            <td>Charges</td>
+            <td>:</td>
+            <td>$<%=(data.total-data.subtotal)/100%></td>
+          </tr>
+          <tr>
+            <td>Net Amount</td>
+            <td>:</td>
+            <td>$<%=(data.total)/100%></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="horizontal-line"></div>
+      <p class="centered">
+        Once the product is received by you, it is your responsibility to take
+        care of the product.Thank you!
+      </p>
+      <div class="horizontal-line"></div>
+      <p>Counter:- <%= time %></p>
+      <p>Cashier:- <%= cashier %></p>
+    </div>
+  </body>
+</html>

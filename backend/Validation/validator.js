@@ -76,4 +76,37 @@ exports.menuRegisterValidator = checkSchema({
       errorMessage: "Location ID should be between 6-50 characters.",
     },
   },
+  city: {
+    exists: {
+      errorMessage: "City is required.",
+      options: { checkFalsy: true },
+    },
+    isString: { errorMessage: "City should be string." },
+    isLength: {
+      options: { min: 3, max: 24 },
+      errorMessage: "City should be between 3-24 characters.",
+    },
+  },
+  address1: {
+    exists: {
+      errorMessage: "Address 1 is required.",
+      options: { checkFalsy: true },
+    },
+    isString: { errorMessage: "Address 1 should be string." },
+    isLength: {
+      options: { min: 3, max: 24 },
+      errorMessage: "Address 1 should be between 3-24 characters.",
+    },
+  },
+  address2: {
+    exists: {
+      errorMessage: "Address 2 is required.",
+      options: { checkFalsy: true },
+    },
+    isString: { errorMessage: "Address 2 should be string." },
+    isLength: {
+      options: { min: 3, max: 24 },
+      errorMessage: "Address 2 should be between 3-24 characters.",
+    },
+  },
 });

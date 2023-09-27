@@ -1,152 +1,87 @@
 import React from "react";
-import { FaFacebook, FaYoutube, FaLinkedin, FaGithub } from "react-icons/fa";
-// import paymentCard from "../../assets/payment.png";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 export function UserFooter() {
-  // const [emailInfo, setEmailInfo] = useState("");
-  // const [subscription, setSubscription] = useState(false);
-  // const [errMsg, setErrMsg] = useState("");
-
-  // const emailValidation = () => {
-  //   return String(emailInfo)
-  //     .toLocaleLowerCase()
-  //     .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
-  // };
-
-  // const handleSubscription = () => {
-  //   if (emailInfo === "") {
-  //     setErrMsg("Please provide an Email !");
-  //   } else if (!emailValidation(emailInfo)) {
-  //     setErrMsg("Please give a valid Email!");
-  //   } else {
-  //     setSubscription(true);
-  //     setErrMsg("");
-  //     setEmailInfo("");
-  //   }
-  // };
   return (
-    <div className="w-full bg-[#F5F5F3] py-20">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-4 px-4 gap-10">
-        <div className="col-span-2">
-          <h3 className="text-xl font-bodyFont font-semibold mb-6">
-            More about myDvls Shop
+    <div className="w-full text-black bg-[#F5F5F3] py-20">
+      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 px-4 gap-10">
+        <div className="col-span-1 ml-6">
+          <h3 className="text-xl font-bodyFont text-green-700 font-semibold mb-6">
+            More About MyDvls Shop
           </h3>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 text-black">
             <p className="text-base w-full xl:w-[80%]">
               We are one of the leading agencies in the technical space for the
               hospitality industry with our specialty being the service, retail
               and hotel industries. Pretty soon to come will be events , luxury
               and fintech as well.
             </p>
-            <ul className="flex items-center gap-2">
-              <a
-                href="https://www.youtube.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaYoutube />
-                </li>
-              </a>
-              <a href="https://github.com/" target="_blank" rel="noreferrer">
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaGithub />
-                </li>
-              </a>
+            <ul className="flex items-center text-white gap-2">
               <a
                 href="https://www.facebook.com/"
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                <li className="w-7 h-7 bg-black  hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
                   <FaFacebook />
                 </li>
               </a>
               <a
-                href="https://www.linkedin.com/"
+                href="https://www.instagram.com/"
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaLinkedin />
+                <li className="w-7 h-7 bg-black  hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                  <FaInstagram />
                 </li>
               </a>
             </ul>
           </div>
         </div>
-        <div>
-          <h3 className="text-xl font-bodyFont font-semibold mb-6">
-            Our Restaurants
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="text-xl text-green-700 font-bodyFont font-semibold mb-6">
+            Quick Links
           </h3>
           <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Everest Maya
+            <li className="font-titleFont text-base  hover:text-green-600 cursor-pointer duration-300">
+              Order Online
             </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Terarain
+            <li className="font-titleFont text-base  hover:text-green-600 cursor-pointer duration-300">
+              Menu
+            </li>
+            <li className="font-titleFont text-base  hover:text-green-600 cursor-pointer duration-300">
+              Contact
             </li>
           </ul>
         </div>
-        <div>
-          <h3 className="text-xl font-bodyFont font-semibold mb-6">
-            Your account
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="text-xl font-bodyFont font-semibold text-green-700 mb-6">
+            Address
           </h3>
-          <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Profile
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Orders
-            </li>
-          </ul>
+          <address>
+            <ul className="flex flex-col gap-2">
+              <a
+                href="https://www.google.com/maps/search/1751+Hover+Street,+Longmont+80504"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-titleFont text-base hover:text-green-600 hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300"
+              >
+                <li>1751 Hover Street, Longmont 80504</li>
+              </a>
+
+              <a href="tel:(303) 647-4098" target="_blank" rel="noreferrer">
+                <li className="">(203) 637-****</li>
+              </a>
+              <a
+                href="mailto:support@mydvls.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <li className="">support@mydvls.com</li>
+              </a>
+            </ul>
+          </address>
         </div>
-
-        {/* <div className="col-span-2 flex flex-col items-center w-full px-4">
-          <h3 className="text-xl font-bodyFont font-semibold mb-6">
-            Subscribe to our newsletter.
-          </h3>
-          <div className="w-full">
-            <p className="text-center mb-4">
-              A at pellentesque et mattis porta enim elementum.
-            </p>
-            {subscription ? (
-              <p className="w-full text-center text-base font-titleFont font-semibold text-green-600">
-                Subscribed Successfully !
-              </p>
-            ) : (
-              <div className="w-full flex-col xl:flex-row flex justify-between items-center gap-4">
-                <div className="flex flex-col w-full">
-                  <input
-                    onChange={(e) => setEmailInfo(e.target.value)}
-                    value={emailInfo}
-                    className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
-                    type="text"
-                    placeholder="Insert your email ...*"
-                  />
-                  {errMsg && (
-                    <p className="text-red-600 text-sm font-semibold font-titleFont text-center animate-bounce mt-2">
-                      {errMsg}
-                    </p>
-                  )}
-                </div>
-                <button
-                  onClick={handleSubscription}
-                  className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
-                >
-                  Subscribe
-                </button>
-              </div>
-            )}
-
-            <img
-              alt="subscription"
-              className={`w-[80%] lg:w-[60%] mx-auto ${
-                subscription ? "mt-2" : "mt-6"
-              }`}
-              src={paymentCard}
-            />
-          </div>
-        </div> */}
       </div>
     </div>
   );

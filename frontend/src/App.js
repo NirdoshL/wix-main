@@ -1,6 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
 import { LoginForm, RegisterForm } from "./components";
-import { AdminOrderList, Dashboard } from "./pages/index";
+import { AdminOrderList, Dashboard, Settings } from "./pages/index";
 import ProtectedUserRoute from "./function/protectedUser";
 import {
   GlobalHeader,
@@ -24,10 +24,10 @@ import { EmployeeList } from "./pages/SuperAdmin/employeeList";
 import WixShowProducts from "./components/User/wixUserProduct";
 import ProtectedSuperRoute from "./function/ProtectedSuperAdmin";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AdminMenuList from "./pages/Admin/menuList";
 
 function App() {
   const Role = IsAuthenticated();
-
   return (
     <>
       <BrowserRouter>
@@ -81,6 +81,7 @@ function App() {
               <Route path="menus/:name/:id" element={<MenuList />} exact />
               <Route path="restaurants" element={<RestaurantPage />} exact />
               <Route path="order" element={<OrderList />} exact />
+              <Route path="super/settings" element={<Settings />} exact />
               <Route path="employee" element={<EmployeeList />} exact />
               <Route path="profiles" element={<Profile />} exact />
             </Route>
@@ -90,7 +91,12 @@ function App() {
           <Route element={<ProtectedAdminRoute />}>
             <Route path="/" element={<AdminHeader />}>
               <Route path="/admin/order" element={<AdminOrderList />} exact />
+              <Route
+                path="/admin/restaurant/menu"
+                element={<AdminMenuList exact />}
+              />
               <Route path="/admin/profile" element={<Profile />} exact />
+              <Route path="/admin/settings" element={<Settings />} exact />
             </Route>
           </Route>
         </Routes>

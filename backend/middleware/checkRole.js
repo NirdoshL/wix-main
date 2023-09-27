@@ -1,13 +1,13 @@
 const ErrorHandler = require("../Utils/errorClass");
 const { tryCatch } = require("../Utils/tryCatchController");
 const { decodeToken } = require("../utils/utility.function");
-const User = require("../model/User");
+const User = require("../Model/User");
 
 exports.checkRole = (...roles) => {
   return tryCatch(async (req, res, next) => {
     const token = (await req.cookies.ACST) ? await req.cookies.ACST : null;
     if (!token) {
-      throw new ErrorHandler("Invalid Token.", 403);
+      throw new ErrorHandler("Invalid token", 403);
     }
     decodeToken(token)
       .then(async (decoded) => {

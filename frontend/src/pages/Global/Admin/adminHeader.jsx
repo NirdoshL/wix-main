@@ -6,7 +6,7 @@ export function AdminHeader() {
   return (
     <>
       <div className="">
-        <div className="flex my-[6%] overflow-scroll">
+        <div className="flex my-[70px] overflow-scroll">
           <div className="basis-[12%] h-[90vh]">
             <AdminSidebar />
           </div>

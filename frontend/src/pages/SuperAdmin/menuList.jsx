@@ -17,7 +17,7 @@ export function MenuList() {
         setShowLoading(false);
       } catch (error) {
         setShowLoading(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
     fetchDataItemAsync();

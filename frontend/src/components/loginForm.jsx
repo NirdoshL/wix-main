@@ -1,9 +1,10 @@
 import React from "react";
-import Image from "../assets/3d1.png";
 import { useFormik } from "formik";
-import { loginValidation } from "../validation/validate";
-import { LoginUser } from "../function/userHandle";
+import Image from "../assets/3d1.png";
 import { Link } from "react-router-dom";
+import { LoginUser } from "../function/userHandle";
+import { loginValidation } from "../validation/validate";
+import { Formfield } from "../components";
 
 const initialValues = {
   name: "",
@@ -34,47 +35,30 @@ export function LoginForm() {
             <span className="font-light text-gray-400 mb-8">
               Please fill the form correctly.
             </span>
-            <div className="py-4">
-              <span className="mb-2 text-md">
-                Email:
-                <span className="mb-2 text-md text-red-600">*</span>
-              </span>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                id="email"
-              />
-              {errors.email && touched.email ? (
-                <span className="font-light text-red-400 mb-8">
-                  {errors.email}
-                </span>
-              ) : null}
-            </div>
-            <div className="py-4">
-              <span className="mb-2 text-md">
-                Password
-                <span className="mb-2 text-md text-red-600">*</span>
-              </span>
-              <input
-                autoComplete="false"
-                type="password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                id="password"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              />
-              {errors.password && touched.password ? (
-                <span className="font-light text-red-400 mb-8">
-                  {errors.password}
-                </span>
-              ) : null}
-            </div>
+            <Formfield
+              title={"Email"}
+              req={true}
+              type={"email"}
+              name={"email"}
+              value={values.email}
+              onchange={handleChange}
+              onblur={handleBlur}
+              id={"email"}
+              error={errors.email}
+              touched={touched.email}
+            />
+            <Formfield
+              title={"Password"}
+              req={true}
+              type={"password"}
+              name={"password"}
+              value={values.password}
+              onchange={handleChange}
+              onblur={handleBlur}
+              id={"password"}
+              error={errors.password}
+              touched={touched.password}
+            />
             <button
               type="submit"
               className="w-full bg-green-600 text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"

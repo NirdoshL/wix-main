@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
-  userInfo: [],
   products: [],
 };
 
@@ -14,7 +13,7 @@ export const ProductSlice = createSlice({
       const item = state.products.find(
         (item) => item._id === action.payload._id
       );
-      toast("Item Added to Cart!");
+      toast.success("Item Added to Cart!");
       if (item) {
         item.quantity += action.payload.quantity;
       } else {
@@ -46,6 +45,7 @@ export const ProductSlice = createSlice({
     },
     resetCart: (state) => {
       state.products = [];
+      toast.success("Cart reset success!");
     },
   },
 });

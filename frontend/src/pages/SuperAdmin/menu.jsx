@@ -14,11 +14,10 @@ export function Menu() {
       try {
         const responseData = await fetchData();
         setData(responseData);
-        console.log(responseData);
         setShowLoader(false);
       } catch (error) {
         setShowLoader(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
 
@@ -28,7 +27,7 @@ export function Menu() {
   const toggleMessage = (value) => {
     const toggle = toggleVisibility(value);
     if (toggle) {
-      toast("Visibility Toggled, Need refresh to see change.");
+      toast.success("Visibility Toggled, Need refresh to see change.");
     }
   };
 

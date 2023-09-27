@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Img from "../../assets/29.png";
-import { fetchData } from "../../function/fetchMenu";
+import Img from "../../assets/z.png";
 import { toast } from "react-toastify";
 import ViewRestaurant from "./viewRestaurant";
+import React, { useEffect, useState } from "react";
+import { fetchData } from "../../function/fetchMenu";
 
-const ShopNow = () => {
+const RestaurantList = () => {
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
   useEffect(() => {
@@ -12,11 +12,10 @@ const ShopNow = () => {
       try {
         const responseData = await fetchData();
         setData(responseData);
-        console.log(responseData);
         setShowLoading(false);
       } catch (error) {
         setShowLoading(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
 
@@ -35,7 +34,7 @@ const ShopNow = () => {
               _id={restaurant.apiID}
               img={Img}
               restName={restaurant.name}
-              location="Kathmandu Nepal"
+              location={`${restaurant.address1}-${restaurant.address2}`}
             />
           ))}
       </div>
@@ -43,4 +42,4 @@ const ShopNow = () => {
   );
 };
 
-export default ShopNow;
+export default RestaurantList;

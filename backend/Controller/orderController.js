@@ -1,4 +1,4 @@
-const User = require("../model/User");
+const User = require("../Model/User");
 const Order = require("../Model/orderModel");
 const { tryCatch } = require("../Utils/tryCatchController");
 const ErrorHandler = require("../Utils/errorClass");

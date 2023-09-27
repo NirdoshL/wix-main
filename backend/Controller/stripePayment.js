@@ -1,10 +1,8 @@
 require("dotenv").config();
 const Stripe = require("stripe");
 const Order = require("../Model/orderModel");
-// const ErrorHandler = require("../Utils/errorClass");
 const asyncHandler = require("express-async-handler");
 const { tryCatch } = require("../Utils/tryCatchController");
-
 const stripe = Stripe(process.env.STRIPE_KEY);
 
 // paymet setUp for Stripe
@@ -12,11 +10,22 @@ exports.stripePayment = asyncHandler(
   tryCatch(async (req, res, next) => {
     const { userId, cartItems, email, shippingCharge, totalAmount } =
       await req.body;
+    console.log(cartItems);
+    const cart = cartItems.map((item) => {
+      return {
+        quantity: item.quantity,
+        name: item.name,
+        price: item.price,
+        resID: item.resID,
+        variation: item.variation,
+        variationPrice: item.variationPrice,
+      };
+    });
     const customer = await stripe.customers.create({
       email: email,
       metadata: {
         userId: userId,
-        cart: JSON.stringify(cartItems),
+        cart: JSON.stringify(cart),
       },
     });
     const paymentIntent = await stripe.paymentIntents.create({
@@ -25,6 +34,7 @@ exports.stripePayment = asyncHandler(
       customer: customer.id,
     });
     console.log(paymentIntent);
+
     // Products maping to stripe
     const line_items = cartItems.map((item) => {
       {
@@ -94,11 +104,16 @@ exports.stripePayment = asyncHandler(
 
 const createOrder = async (customer, data) => {
   const Items = JSON.parse(customer.metadata.cart);
+  const timestamps = Date.now();
+  const date = new Date(timestamps);
+  const min = 1000;
+  const max = 9999;
   const products = Items.map((item) => {
     return {
       productId: item.id,
       quantity: item.quantity,
       name: item.name,
+      price: item.price,
       resID: item.resID,
       variation: item.variation,
       variationPrice: item.variationPrice,
@@ -114,6 +129,9 @@ const createOrder = async (customer, data) => {
     total: data.amount_total,
     shipping: data.customer_details,
     payment_status: data.payment_status,
+    bill_No: `Dvls${
+      Math.floor(Math.random() * (max - min + 1)) + min
+    }-USA-${date.getFullYear()}`,
   });
 
   try {

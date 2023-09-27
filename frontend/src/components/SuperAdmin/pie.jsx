@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
-//Just a dummy data, Not really required in our project
+//Just a dummy data,Dynamic Pie is required in next phase 😊
 const data = [
   { name: "Group A", value: 400 },
   { name: "Group B", value: 300 },

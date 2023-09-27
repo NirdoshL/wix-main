@@ -1,6 +1,10 @@
-const bcrypt = require("bcryptjs");
-const User = require("../model/User");
+const ejs = require("ejs");
+const path = require("path");
 const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
+const User = require("../Model/User");
+const Client = require("../DataBase/cacheConnect");
+const RegisteredMenu = require("../Model/registerMenu");
 const ErrorHandler = require("../Utils/errorClass");
 const asyncHandler = require("express-async-handler");
 const { tryCatch } = require("../Utils/tryCatchController");
@@ -11,14 +15,18 @@ const {
   checkPassword,
   newToken,
   verifyToken,
+  decodeToken,
 } = require("../utils/utility.function");
 const cookiesName = require("../Config/cookiesName");
 const cookieExpiry = require("../Config/cookieExpiry");
 const sendEmail = require("../Utils/sendmail");
+const { default: mongoose } = require("mongoose");
+const { generateRandomNumber } = require("../middleware/otpGenerator");
 
 // Register user
 exports.signUp = asyncHandler(
   tryCatch(async (req, res, next) => {
+    //validation check
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -27,7 +35,7 @@ exports.signUp = asyncHandler(
         errors: errors.array(),
       });
     }
-    console.log(req.body.name);
+    //validation check ends
     const { email, name, password } = await req.body;
     const userAgent = await req.headers["user-agent"];
     const ip = await req.ip;
@@ -55,35 +63,21 @@ exports.signUp = asyncHandler(
                   newUser.password = hash;
                   newUser
                     .save()
-                    .then((user) => {
+                    .then(async (user) => {
                       if (user) {
+                        const template = path.join(
+                          __dirname,
+                          "../views/mail.ejs"
+                        );
+                        const data = await ejs.renderFile(template, {
+                          name,
+                          emailVerificationCode,
+                          id: newUser._id,
+                        });
                         sendEmail({
                           to: email,
                           subject: "Email verification",
-                          html: `<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" width="100%" style="border-collapse: collapse;">
-                              <tr>
-                                  <td style="padding: 20px 0; text-align: center; background-color: #008000; color: #fff;">
-                                      <h1>Email Verification</h1>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td style="padding: 30px; background-color: #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-                                      <p>Hello ${name},</p>
-                                      <p>Thank you for signing up! To complete your registration, please click the button below to verify your email address:</p>
-                                      <p style="text-align: center;">
-                                          <a href="${process.env.BACKEND_URL}${process.env.PORT}/users/verify/id=${newUser._id}/code=${emailVerificationCode}" style="display: inline-block; background-color: #008000; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Verify Email</a>
-                                      </p>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td style="text-align: center; color: #777; margin-top: 20px;">
-                                      &copy; 2023 MyDVLS. All rights reserved.
-                                  </td>
-                              </tr>
-                          </table>
-                      </body>
-                        `,
+                          html: data,
                         });
                         res.status(200).json({
                           success: true,
@@ -155,6 +149,7 @@ exports.logIn = asyncHandler(
               name: user.name,
               email: user.email,
               role: hash,
+              resAddress: user.resAddress,
               resID: user.resID,
               resName: user.resName,
               userInfo: userInformation,
@@ -164,6 +159,9 @@ exports.logIn = asyncHandler(
             user.userInfo = userInformation;
             user.isLogged = true;
             await user.save();
+            //caching  user
+            // Client.set(`${user._id}`, user);
+            //caching finished
             res.cookie(cookiesName[1], `${token}`, {
               httpOnly: true,
               secure: true,
@@ -225,43 +223,45 @@ exports.verify = asyncHandler(
 exports.logOut = asyncHandler(
   tryCatch(async (req, res, next) => {
     const token = (await req.cookies.ACST) ? await req.cookies.ACST : null;
-    verifyToken(token)
-      .then(async (isToken) => {
-        if (isToken) {
-          await User.findOne({ accessToken: token })
-            .then(async (user) => {
-              if (!user) {
-                throw new ErrorHandler(
-                  "You do not have permission to perform this action."
-                );
-              }
-              user.accessToken = user.accessToken.filter((rt) => rt != token);
-              user.isLogged = false;
-              await user.save();
-              res.clearCookie(cookiesName[1], {
-                httpOnly: true,
-                secure: true,
-                sameSite: "None",
-              });
-              res.status(200).json({
-                success: true,
-                message: "Logout Successful.",
-              });
-            })
-            .catch((error) => {
-              res.status(500).json({
-                success: true,
-                message: `Problem in logging out:${error}`,
-              });
-            });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          success: true,
-          message: `Problem in logging out:${error}`,
+    if (token) {
+      // verifyToken(token)
+      //   .then(async (isToken) => {
+      // if (isToken) {
+      await User.findOne({ accessToken: token })
+        .then(async (user) => {
+          if (!user) {
+            throw new ErrorHandler(
+              "You do not have permission to perform this action."
+            );
+          }
+          user.accessToken = user.accessToken.filter((rt) => rt != token);
+          user.isLogged = false;
+          await user.save();
+          res.clearCookie(cookiesName[1], {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+          });
+          res.status(200).json({
+            success: true,
+            message: "Logout Successful.",
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            success: false,
+            message: `Problem in logging out:${error}`,
+          });
         });
-      });
+      // }
+      // })
+      // .catch((error) => {
+      //   res.status(500).json({
+      //     success: true,
+      //     message: `Problem in logging out:${error}`,
+      //   });
+      // });
+    }
   })
 );
 
@@ -283,6 +283,7 @@ exports.getUsers = asyncHandler(
 exports.makeAdmin = asyncHandler(
   tryCatch(async (req, res, next) => {
     const { id, resID, resName } = req.body;
+    console.log(resID);
     await User.findById(id)
       .then(async (user) => {
         if (!user) {
@@ -291,16 +292,23 @@ exports.makeAdmin = asyncHandler(
         if (!user.isverified) {
           next(new ErrorHandler("User not verified.", 400));
         }
-
-        if (user.isverified && user.role === "user") {
-          user.role = "admin";
-          user.resID = resID;
-          user.resName = resName;
-        } else if (user.isverified && user.role === "admin") {
-          user.role = "user";
-          user.resID = undefined;
-          user.resName = undefined;
-        }
+        await RegisteredMenu.findOne({ apiID: resID })
+          .then((item) => {
+            if (user.isverified && user.role === "user") {
+              user.role = "admin";
+              user.resID = resID;
+              user.resName = resName;
+              user.resAddress = `${item.address1}-${item.address2}-${item.city}`;
+            } else if (user.isverified && user.role === "admin") {
+              user.role = "user";
+              user.resID = undefined;
+              user.resName = undefined;
+              user.resAddress = undefined;
+            }
+          })
+          .catch((error) => {
+            return next(new ErrorHandler(`${error}`));
+          });
         const save = await user.save();
         if (save) {
           res.status(200).json({
@@ -449,5 +457,103 @@ exports.wixlogIn = asyncHandler(
           message: `${err}`,
         })
       );
+  })
+);
+
+//generate token
+exports.generateOTPToken = asyncHandler(
+  tryCatch(async (req, res, next) => {
+    const token = (await req.cookies.ACST) ? await req.cookies.ACST : null;
+    const email = await decodeToken(token)
+      .then((dec) => dec.email)
+      .catch((err) => {
+        return next(new ErrorHandler("Invalid Token!", 400));
+      });
+    await User.findOne({ accessToken: token })
+      .then(async (user) => {
+        if (!user) {
+          throw new ErrorHandler("Invalid Token !", 400);
+        }
+        const etoken = generateRandomNumber();
+        user.emailToken = etoken;
+        await user.save();
+        const template = path.join(__dirname, "../views/verification.ejs");
+        const data = await ejs.renderFile(template, {
+          token: etoken,
+          src: `https://static.wixstatic.com/media/0fe16d_5d7c5c03e40342d68305c01cf1bdee4f~mv2.jpg/v1/fill/w_91,h_91,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/1657388815725.jpg`,
+        });
+        sendEmail({
+          to: email,
+          subject: "Reset Password",
+          html: data,
+        });
+        res.status(200).json({
+          success: true,
+          message: "Token has been sent to your email",
+        });
+      })
+      .catch((error) => {
+        next(new ErrorHandler(`Something went wrong: ${error}`));
+      });
+  })
+);
+
+//Update user
+exports.updateUserDetails = asyncHandler(
+  tryCatch(async (req, res, next) => {
+    const { old, newpass, token } = await req.body;
+    const xtoken = (await req.cookies.ACST) ? await req.cookies.ACST : null;
+    if (old === newpass) {
+      return res.status(400).json({
+        success: false,
+        message: "old Password matched with new password !",
+      });
+    }
+    await User.findOneAndUpdate({ emailToken: token })
+      .select("+password")
+      .then(async (user) => {
+        if (!user) {
+          throw new ErrorHandler("Code not matched !", 400);
+        }
+        checkPassword(old, user.password).then(async (same) => {
+          if (!same) {
+            return next(new ErrorHandler("Invalid Password.", 400));
+          }
+          bcrypt.genSalt(10, (err, salt) => {
+            if (err) {
+              throw new ErrorHandler(`Error due to ${err}`);
+            } else {
+              bcrypt.hash(newpass, salt, (err, hash) => {
+                if (err) {
+                  throw new ErrorHandler(`Error due to ${err}`);
+                } else {
+                  user.password = hash;
+                  user.emailToken = undefined;
+                  user
+                    .save()
+                    .then((user) => {
+                      if (user) {
+                        res.status(200).json({
+                          success: true,
+                          message:
+                            "Your Password has been updated successfully.",
+                        });
+                        next();
+                      }
+                    })
+                    .catch((err) =>
+                      res
+                        .status(400)
+                        .json({ success: false, message: `${err}` })
+                    );
+                }
+              });
+            }
+          });
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({ success: false, message: `Code Not Matched !` });
+      });
   })
 );

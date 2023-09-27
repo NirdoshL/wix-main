@@ -1,17 +1,15 @@
 import Product from "./product";
 import Spinner from "../spinner";
 import TopCatagory from "./catagory";
-import Img from "../../assets/29.png";
+import Img from "../../assets/food.png";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
 import React, { useState, useEffect } from "react";
 import { fetchDataItem, fetchSectionAndMenu } from "../../function/fetchMenu";
-import { Store } from "../../config/store";
 
 export default function ShowProducts() {
   const { id, name } = useParams();
-
   const [data, setData] = useState([]);
   const [datas, setDatas] = useState([]);
   const [allDatas, setallDatas] = useState([]);
@@ -33,7 +31,7 @@ export default function ShowProducts() {
         setShowLoading(false);
       } catch (error) {
         setShowLoading(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
     fetchDataItemAsync();
@@ -53,7 +51,7 @@ export default function ShowProducts() {
     <Spinner />
   ) : (
     <>
-      <h1 className="py-3 text-3xl text-green-600 md:text-4xl text-center justify-center font-bold">
+      <h1 className="py-3 text-3xl bg-green-600 text-white md:text-4xl text-center justify-center font-bold">
         {name}
       </h1>
       <div className="flex items-center gap-2 m-2 md:gap-6 mt-4 md:mt-0">
@@ -81,10 +79,8 @@ export default function ShowProducts() {
 
       <TopCatagory datas={datas} data={data} indexCata={indexCata} />
       <hr className="border-green-800 border-2" />
-      <h1 className="py-6 text-3xl underline text-red-600 md:text-4xl text-center justify-center font-bold">
-        Our Menu
-      </h1>
-      <div className="w-full grid grid-cols-1 m-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
+
+      <div className="w-full grid grid-cols-1 m-1 md:grid-cols-2 lgl:grid-cols-2 xl:grid-cols-2 gap-10">
         {datas.data.slice(0, visibleProducts).map((item) => (
           <>
             {item.variations
@@ -106,12 +102,11 @@ export default function ShowProducts() {
                           key={index}
                           _id={item.title}
                           resID={id}
-                          img={Img}
+                          img={item.media ? item.media : Img}
                           foodName={JSON.parse(item.title).en_US}
                           variations={titlesList}
                           variationPrice={variation.prices}
                           price={item.price ? parseInt(item.price) / 100 : ""}
-                          badge={true}
                           des={item.desc}
                         />
                       </div>
@@ -123,11 +118,10 @@ export default function ShowProducts() {
                   <Product
                     key={item.menuId}
                     _id={item.title}
-                    img={Img}
+                    img={item.media ? item.media : Img}
                     resID={id}
                     foodName={JSON.parse(item.title).en_US}
                     price={item.price ? parseInt(item.price) / 100 : ""}
-                    badge={true}
                     des={item.desc}
                   />
                 )}

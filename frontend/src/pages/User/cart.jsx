@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.productReducer.products);
   const [totalAmt, setTotalAmt] = useState("");
   const [shippingCharge, setShippingCharge] = useState("");
+  const products = useSelector((state) => state.productReducer.products);
   useEffect(() => {
     let price = 0;
     products.map((item) => {
@@ -21,6 +21,7 @@ const Cart = () => {
     });
     setTotalAmt(price);
   }, [products]);
+  //Shipping Charges
   useEffect(() => {
     if (totalAmt <= 20) {
       setShippingCharge(25);

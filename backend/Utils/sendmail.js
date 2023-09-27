@@ -8,8 +8,8 @@ const sendEmail = (data) => {
       pass: process.env.NODE_MAILER_PASSWORD,
       //this password is APP_PASSWORD (goto:google->security->search app password and add or delete if needed)
     },
-    port: 456,
-    host: "smtp.gmail.com",
+    port: parseInt(process.env.NODE_MAILER_PORT),
+    host: process.env.NODE_MAILER_HOST,
   });
 
   const mailOptions = {

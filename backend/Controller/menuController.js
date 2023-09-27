@@ -4,11 +4,19 @@ const Restaurant = require("../Model/registerMenu");
 const Section = require("../Model/sectionModel");
 const ErrorHandler = require("../Utils/errorClass");
 const { tryCatch } = require("../Utils/tryCatchController");
+const Client = require("../DataBase/cacheConnect");
 
 // Get Menu Data from its id
 exports.getMenuItems = tryCatch(async (req, res, next) => {
   const { id } = await req.params;
+  // const cachedData = await Client.get(id)
+  //   .then((data) => data)
+  //   .catch((err) => err);
+  // if (cachedData) {
+  //   console.log(cachedData);
+  // }
   const data = await Menu.find({ apiID: id });
+
   if (data.length > 0) {
     res.status(200).json({
       success: true,
@@ -54,6 +62,7 @@ exports.getItems = tryCatch(async (req, res, next) => {
                     variations: (await dataItem.variations)
                       ? dataItem.variations
                       : null,
+                    media: await dataItem.media.logo,
                   });
                   menus.push(newMenu);
                 }
@@ -75,6 +84,10 @@ exports.getItems = tryCatch(async (req, res, next) => {
             }
             const saveMenu = await Menu.insertMany(menus);
             const saveSection = await Section.insertMany(sections);
+            //caching set
+            // Client.set(`${saveMenu._id}`, saveMenu);
+            // Client.set(`${saveSection._id}`, saveSection);
+            //caching done
             if (saveMenu && saveSection) {
               res.status(200).json({
                 success: true,

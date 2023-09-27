@@ -12,6 +12,7 @@ export default function PayButton({ totalAmount, shipCharge, cartItems }) {
           userId: user.user.id,
           totalAmount: totalAmount,
           email: user.user.email,
+          name: user.user.name,
           shippingCharge: shipCharge,
         }
       )

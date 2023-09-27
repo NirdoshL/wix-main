@@ -1,21 +1,10 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AdminSidebarLink } from "../../../config/SideBarLinks";
 
 export function AdminSidebar() {
-  //sideBar menu list with name,routing link,Icon
-  const menus = [
-    {
-      name: "Orders",
-      link: "admin/order",
-      icon: TbReportAnalytics,
-      margin: true,
-    },
-    { name: "Settings", link: "/", icon: RiSettings4Line },
-  ];
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <section className=" flex gap-6">
       <div
@@ -33,7 +22,7 @@ export function AdminSidebar() {
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 ">
-          {menus?.map((menu, i) => (
+          {AdminSidebarLink?.map((menu, i) => (
             <Link
               to={menu?.link}
               key={i}

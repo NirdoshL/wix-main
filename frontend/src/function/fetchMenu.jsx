@@ -1,31 +1,27 @@
-import axios from "axios";
 import { toast } from "react-toastify";
 import { config } from "../config/credentials";
-// import { Store } from "../config/store";
+import axiosInstance from "../config/interceptor";
 
 //Super Admin To toggle restaurnat visibility
 export const toggleVisibility = async (id) => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/menu/menus/restaurant/toggle/${id}`,
+    const response = await axiosInstance.get(
+      `/api/v1/menu/menus/restaurant/toggle/${id}`,
       config
     );
     return response.data;
   } catch (error) {
-    toast(`${error}`);
+    toast.error(`${error}`);
   }
 };
 
 //will fetch the all menu from backend
 export const fetchData = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/menu/menus`,
-      config
-    );
+    const response = await axiosInstance.get(`/api/v1/menu/menus`, config);
     return response.data;
   } catch (error) {
-    toast(`${error}`);
+    toast.error(`${error}`);
   }
 };
 
@@ -33,13 +29,13 @@ export const fetchData = async () => {
 
 export const fetchSectionAndMenu = async (id) => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/menu/menus/section/data/${id}`,
+    const response = await axiosInstance.get(
+      `/api/v1/menu/menus/section/data/${id}`,
       config
     );
     return response.data;
   } catch (error) {
-    toast(`${error}`);
+    toast.error(`${error}`);
   }
 };
 
@@ -47,13 +43,13 @@ export const fetchSectionAndMenu = async (id) => {
 
 export const fetchDataItem = async (id) => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/menu/menus/${id}`,
+    const response = await axiosInstance.get(
+      `/api/v1/menu/menus/${id}`,
       config
     );
     return response.data;
   } catch (error) {
-    toast(`${error}`);
+    toast.error(`${error}`);
   }
 };
 

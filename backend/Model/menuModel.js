@@ -22,5 +22,8 @@ const MenuSchema = new Schema({
   variations: {
     type: Array,
   },
+  media: {
+    type: String,
+  },
 });
 module.exports = User = mongoose.model("menu", MenuSchema);

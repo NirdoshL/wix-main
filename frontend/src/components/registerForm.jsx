@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "../assets/3d1.png";
 import { useFormik } from "formik";
-import { registerValidation } from "../validation/validate";
-import { RegisterUser } from "../function/userHandle";
+import Image from "../assets/3d1.png";
 import { Link } from "react-router-dom";
-// import { RegisterMenuData } from "../function/registerMenu";
+import { RegisterUser } from "../function/userHandle";
+import { registerValidation } from "../validation/validate";
+import { Formfield } from "../components";
 
 const initialValues = {
   name: "",
@@ -37,71 +37,43 @@ export function RegisterForm() {
             </span>
             {/* name*/}
 
-            <div className="py-4">
-              <span className="mb-2 text-md">
-                UserName:
-                <span className="mb-2 text-md text-red-600">*</span>
-              </span>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              />
-              {errors.name && touched.name ? (
-                <span className="font-light text-red-400 mb-8">
-                  {errors.name}
-                </span>
-              ) : null}
-            </div>
+            <Formfield
+              title={"UserName"}
+              req={true}
+              type={"name"}
+              name={"name"}
+              value={values.name}
+              onchange={handleChange}
+              onblur={handleBlur}
+              id={"name"}
+              error={errors.name}
+              touched={touched.name}
+            />
             {/* Email*/}
-
-            <div className="py-4">
-              <span className="mb-2 text-md">
-                Email:
-                <span className="mb-2 text-md text-red-600">*</span>
-              </span>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                id="email"
-              />
-              {errors.email && touched.email ? (
-                <span className="font-light text-red-400 mb-8">
-                  {errors.email}
-                </span>
-              ) : null}
-            </div>
-            {/* password*/}
-
-            <div className="py-4">
-              <span className="mb-2 text-md">
-                Password
-                <span className="mb-2 text-md text-red-600">*</span>
-              </span>
-              <input
-                autoComplete="false"
-                type="password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                id="password"
-                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              />
-              {errors.password && touched.password ? (
-                <span className="font-light text-red-400 mb-8">
-                  {errors.password}
-                </span>
-              ) : null}
-            </div>
+            <Formfield
+              title={"Email"}
+              req={true}
+              type={"email"}
+              name={"email"}
+              value={values.email}
+              onchange={handleChange}
+              onblur={handleBlur}
+              id={"email"}
+              error={errors.email}
+              touched={touched.email}
+            />
+            <Formfield
+              title={"Password"}
+              req={true}
+              type={"password"}
+              name={"password"}
+              value={values.password}
+              onchange={handleChange}
+              onblur={handleBlur}
+              id={"password"}
+              error={errors.password}
+              touched={touched.password}
+            />
 
             {/* terms and privacy*/}
             <div className="flex items-start mdl:items-center gap-2">

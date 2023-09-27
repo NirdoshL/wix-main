@@ -35,7 +35,7 @@ export default function WixShowProducts() {
         setShowLoading(false);
       } catch (error) {
         setShowLoading(false);
-        toast(`Error fetching data: ${error}`);
+        toast.error(`Error fetching data: ${error}`);
       }
     }
     fetchDataItemAsync();
@@ -83,7 +83,7 @@ export default function WixShowProducts() {
 
       <TopCatagory datas={datas} data={data} indexCata={indexCata} />
       <hr className="border-green-800 border-2" />
-      <h1 className="py-6 text-3xl underline text-red-600 md:text-4xl text-center justify-center font-bold">
+      <h1 className="py-6 text-3xl text-red-600 md:text-4xl text-center justify-center font-bold">
         Our Menu
       </h1>
       <div className="w-full grid grid-cols-1 m-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
@@ -113,7 +113,6 @@ export default function WixShowProducts() {
                           variations={titlesList}
                           variationPrice={variation.prices}
                           price={item.price ? parseInt(item.price) / 100 : ""}
-                          badge={true}
                           des={item.desc}
                         />
                       </div>
@@ -129,7 +128,6 @@ export default function WixShowProducts() {
                     resID={id}
                     foodName={JSON.parse(item.title).en_US}
                     price={item.price ? parseInt(item.price) / 100 : ""}
-                    badge={true}
                     des={item.desc}
                   />
                 )}

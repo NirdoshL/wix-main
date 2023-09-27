@@ -28,7 +28,7 @@ exports.registerMenu = tryCatch(async (req, res, next) => {
       errors: errors.array(),
     });
   }
-  const { apiID, locationID, name } = await req.body;
+  const { apiID, locationID, name, city, address1, address2 } = await req.body;
   await RegisterMenu.findOne({ apiID: apiID })
     .then(async (item) => {
       if (!item) {
@@ -36,6 +36,9 @@ exports.registerMenu = tryCatch(async (req, res, next) => {
           apiID: apiID,
           locationID: locationID,
           name: name,
+          city: city,
+          address1: address1,
+          address2: address2,
         });
         const saveMenu = await newRegesteredMenu.save();
         if (saveMenu) {
